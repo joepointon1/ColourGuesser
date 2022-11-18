@@ -1,25 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import {useState} from "react"
+import ColourBlock from "./Components/ColourBlock";
+import AnswerButton from "./Components/AnswerButton";
 
-function App() {
+export default function App() {
+  const [currentColour, setCurrentColour] = useState();
+  const [answers, setAnswers] = useState([]);
+  const [noAnswers, setNoAnswers] = useState(3);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <ColourBlock colour={currentColour}></ColourBlock>
+      {renderButtons(noAnswers)}
     </div>
   );
 }
 
-export default App;
+function generateColour(
+
+) {}
+
+function verifyAnswer(answer) {
+  console.log(answer);
+}
+
+function renderButtons(noAnswers){
+  let elements = [];
+  for(let i=0; i< noAnswers;i++){
+    elements.push(<AnswerButton id={i} verifyAnswer={verifyAnswer}></AnswerButton>)
+  }
+  return elements
+}
