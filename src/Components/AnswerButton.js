@@ -1,7 +1,7 @@
 
-function AnswerButton({id, verifyAnswer}) {
+function AnswerButton({colour, verifyAnswer, id}) {
     return ( 
-        <button onClick={()=>verifyAnswer(id)}>Cick me</button>
+        <button onClick={()=>verifyAnswer(id)}>{colour}</button>
      );
 }
 
