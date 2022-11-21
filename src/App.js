@@ -72,7 +72,7 @@ export default function App() {
     let elements = [];
     for (let i = 0; i < noAnswers; i++) {
       elements.push(
-        <ColourBlock key={i} colour={answers[i]}></ColourBlock>
+        <ColourBlock key={i} id={i} colour={answers[i]}></ColourBlock>
         //   <div key={i} style={{ backgroundColor: answers[i], width: "100%" }}>
         //   {answers[i]}
         // </div>
@@ -83,9 +83,14 @@ export default function App() {
 
   return (
     <div className="App">
-      {renderColourBlocks()}
-      {renderButtons()}
-      {score}
+      <header>
+        <h1>Hex colour Guesser</h1>
+      </header>
+      <h2>Colour: {answers[correctAnswer]}</h2>
+      <div className="colour-blocks">{renderColourBlocks()}</div>
+      <div className="answer-buttons">{renderButtons()}</div>
+      <h2>Score: {`${score}/${qNumber - 1}`}</h2>
+      <h2>Percentage: {`${Math.round((score / (qNumber - 1)) * 100)}%`}</h2>
     </div>
   );
 }
