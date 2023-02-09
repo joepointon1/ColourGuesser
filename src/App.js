@@ -6,36 +6,32 @@ export default function App() {
   const [answers, setAnswers] = useState([]);
   const [correctAnswer, setCorrectAnswer] = useState();
   const [noAnswers, setNoAnswers] = useState(3);
-  const [qNumber, setQNumber] = useState(0);
+  const [qNumber, setQNumber] = useState(1);
   const [score, setScore] = useState(0);
   const qNumberChangedRef = useRef(false);
 
-  useEffect(() => {
-    if (qNumber !== 0) {
-      const { answers, correctAnswer } = generateAnswers(noAnswers);
-      setAnswers(answers);
-      setCorrectAnswer(correctAnswer);
-    }
-  }, [qNumber]);
+  function run() {
+    const { answers, correctAnswer } = generateAnswers(noAnswers);
+    setAnswers(answers);
+    setCorrectAnswer(correctAnswer);
+  }
 
   useEffect(() => {
-    if (!qNumberChangedRef.current) {
-      setQNumber((prev) => prev + 1);
-      qNumberChangedRef.current = true;
-    }
+    console.log("colour: ", generateColour());
   }, []);
 
   function generateAnswers() {
+    console.log("no answers ", noAnswers);
     let answers = [];
     for (let i = 0; i < noAnswers; i++) {
       answers.push(generateColour());
     }
-    const correctAnswer = Math.floor(Math.random() * 3);
+    console.log(answers);
+    const correctAnswer = Math.floor(Math.random() * noAnswers);
     return { answers, correctAnswer };
   }
 
   function generateColour() {
-    //generate number between 0 and 15
     let colour = ["#"];
     for (let i = 0; i < 6; i++) {
       colour.push(Math.floor(Math.random() * 16).toString(16));
@@ -51,6 +47,7 @@ export default function App() {
       console.log("inccorect");
     }
     setQNumber((prev) => prev + 1);
+    run();
   }
 
   function renderButtons() {
@@ -73,24 +70,50 @@ export default function App() {
     for (let i = 0; i < noAnswers; i++) {
       elements.push(
         <ColourBlock key={i} id={i} colour={answers[i]}></ColourBlock>
-        //   <div key={i} style={{ backgroundColor: answers[i], width: "100%" }}>
-        //   {answers[i]}
-        // </div>
       );
     }
     return elements;
   }
 
+  function changeNoAnswers(num) {
+    setNoAnswers((prev) => {
+      if (prev + num < 2 || prev + num > 10) {
+        return prev;
+      } else {
+        return prev + num;
+      }
+    });
+  }
+
+  useEffect(() => {
+    reset();
+  }, [noAnswers]);
+
+  function reset() {
+    setQNumber(1);
+    setScore(0);
+    run();
+  }
+
   return (
     <div className="App">
-      <header>
+      <div className="header">
         <h1>Hex colour Guesser</h1>
-      </header>
-      <h2>Colour: {answers[correctAnswer]}</h2>
-      <div className="colour-blocks">{renderColourBlocks()}</div>
-      <div className="answer-buttons">{renderButtons()}</div>
-      <h2>Score: {`${score}/${qNumber - 1}`}</h2>
-      <h2>Percentage: {`${Math.round((score / (qNumber - 1)) * 100)}%`}</h2>
+      </div>
+      <div className="container">
+        <h2>Colour: {answers[correctAnswer]}</h2>
+        <div className="colourBlocksContainer">{renderColourBlocks()}</div>
+        <div className="answerButtonsContainer">{renderButtons()}</div>
+      </div>
+      <div className="score">
+        <span>Score: {`${score}/${qNumber - 1}`}</span>
+        <span>Percentage: {`${Math.round((score / (qNumber - 1)) * 100)}%`}</span>
+      </div>
+      <div className="bottomButtons">
+        <button onClick={() => changeNoAnswers(-1)}>Too hard?</button>
+        <button onClick={() => changeNoAnswers(1)}>Too easy?</button>
+        <button onClick={reset}>Reset Score</button>
+      </div>
     </div>
   );
 }
