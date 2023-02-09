@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/ColourGuesser/static/css/main.9c7fefb8.css",
+    "main.js": "/ColourGuesser/static/js/main.f2b19d82.js",
+    "index.html": "/ColourGuesser/index.html",
+    "main.9c7fefb8.css.map": "/ColourGuesser/static/css/main.9c7fefb8.css.map",
+    "main.f2b19d82.js.map": "/ColourGuesser/static/js/main.f2b19d82.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.9c7fefb8.css",
+    "static/js/main.f2b19d82.js"
+  ]
+}
